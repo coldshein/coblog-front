@@ -1,19 +1,19 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Button from '@mui/material/Button';
+import React from "react";
+import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
 
-import styles from './Header.module.scss';
-import Container from '@mui/material/Container';
-import { useDispatch, useSelector } from 'react-redux';
-import { logout, selectIsAuth } from '../../redux/slices/auth';
+import styles from "./Header.module.scss";
+import Container from "@mui/material/Container";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, selectIsAuth } from "../../redux/slices/auth";
 
 export const Header = () => {
   const dispatch = useDispatch();
-  const isAuth = useSelector(selectIsAuth)
+  const isAuth = useSelector(selectIsAuth);
 
   const onClickLogout = () => {
-    dispatch(logout())
-    window.localStorage.removeItem('token')
+    dispatch(logout());
+    window.localStorage.removeItem("token");
   };
 
   return (
@@ -26,10 +26,14 @@ export const Header = () => {
           <div className={styles.buttons}>
             {isAuth ? (
               <>
-                <Link to="/posts/create">
+                <Link to="/add-post">
                   <Button variant="contained">Постнути</Button>
                 </Link>
-                <Button onClick={onClickLogout} variant="contained" color="error">
+                <Button
+                  onClick={onClickLogout}
+                  variant="contained"
+                  color="error"
+                >
                   Вийти
                 </Button>
               </>
