@@ -17,6 +17,7 @@ export const Home = () => {
 
   const isPostsLoading = posts.status === 'loading';
   const isTagsLoading = tags.status === 'loading';
+  
 
 
   

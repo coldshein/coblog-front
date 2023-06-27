@@ -9,9 +9,11 @@ import styles from "./AddPost.module.scss";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectIsAuth } from "../../redux/slices/auth";
+import { useParams } from "react-router-dom";
 import axios from '../../axios'
 
 export const AddPost = () => {
+  const {id} = useParams();
   const navigate = useNavigate();
   const isAuth = useSelector(selectIsAuth);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -19,18 +21,21 @@ export const AddPost = () => {
   const [text, setText] = React.useState("");
   const [title, setTitle] = React.useState("");
   const [tags, setTags] = React.useState("");
-  const [imageUrl, setImageUrl] = React.useState('');
+  const [imageUrl, setImageUrl] = React.useState("");
   const inputFileRef = React.useRef(null);
 
-  const handleChangeFile = async(event) => {
+  const isEditing = Boolean(id)
+
+  const handleChangeFile = async (event) => {
     try {
       const formData = new FormData();
       const file = event.target.files[0];
       formData.append('image', file);
       const { data } = await axios.post('/upload', formData)
       setImageUrl(data.url);
+      console.log(data.url)
     } catch (error) {
-      console.warn('Publication was failed')
+      console.warn('Publication with file was failed')
     }
   };
 
@@ -48,17 +53,29 @@ export const AddPost = () => {
       const fields = {
         title,
         imageUrl,
+        tags,
         text,
-        tags: tags.split(','),
       } 
-      const {data} = await axios.post('/posts', fields);
-      const id = data._id;
-      navigate(`/posts/${id}`);
+      const { data } = isEditing ? await axios.patch(`/posts/${id}`, fields) : await axios.post('/posts', fields);; 
+      const _id = isEditing ? id : data._id;
+      navigate(`/posts/${_id}`);
 
     } catch (error) {
-      console.warn('Publication was failed !')
+      console.warn('Publication was failed!')
     }
   }
+  React.useEffect(() => {
+    if(id){
+      axios.get(`/posts/${id}`).then(({data}) => {
+        setTitle(data.title)
+        setText(data.text)
+        setImageUrl(data.imageUrl)
+        setTags(data.tags.join(','))
+      } ).catch(err=>{
+        console.warn('Failed to get a posts' , err)
+      })
+    }
+  },[])
 
   const options = React.useMemo(
     () => ({
@@ -128,7 +145,7 @@ export const AddPost = () => {
       />
       <div className={styles.buttons}>
         <Button onClick={onSubmit} type="submit" size="large" variant="contained">
-          Опубліковати
+          {isEditing ? 'Зберегти' : 'Опублікувати'}
         </Button>
         <a href="/">
           <Button size="large">Відміна</Button>
