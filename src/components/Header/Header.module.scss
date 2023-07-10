@@ -1,28 +1,29 @@
 .root {
-  background-color: #fff;
-  padding: 10px 0;
-  border-bottom: 1px solid #e0e0e0;
+
+  padding: 20px 0;
   margin-bottom: 30px;
 }
 
 .inner {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .logo {
-  background-color: black;
-  color: #fff;
+  color: #333;
   font-weight: 700;
   line-height: 35px;
+  font-size: 36px;
 
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   border-radius: 5px;
-  padding: 0 10px;
+  padding: 10px;
   text-decoration: none;
+  transition: all .2s ease-in-out;
 
   &:hover {
-    background-color: #4361ee;
+    color: #615d5d;
   }
 }
 

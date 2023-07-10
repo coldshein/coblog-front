@@ -21,18 +21,19 @@ export const Header = () => {
       <Container maxWidth="lg">
         <div className={styles.inner}>
           <Link className={styles.logo} to="/">
-            <div>cold blog.</div>
+            <div>notablog</div>
           </Link>
           <div className={styles.buttons}>
             {isAuth ? (
               <>
                 <Link to="/add-post">
-                  <Button variant="contained">Постнути</Button>
+                  <Button variant="contained" size="large">Постнути</Button>
                 </Link>
                 <Button
                   onClick={onClickLogout}
                   variant="contained"
                   color="error"
+                  size="large"
                 >
                   Вийти
                 </Button>
@@ -40,10 +41,10 @@ export const Header = () => {
             ) : (
               <>
                 <Link to="/login">
-                  <Button variant="outlined">Увійти</Button>
+                  <Button variant="outlined" size="large">Увійти</Button>
                 </Link>
                 <Link to="/register">
-                  <Button variant="contained">Створити акаунт</Button>
+                  <Button variant="contained" size="large">Створити акаунт</Button>
                 </Link>
               </>
             )}

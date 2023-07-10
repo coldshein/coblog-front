@@ -99,7 +99,7 @@ export const AddPost = () => {
   return (
     <Paper style={{ padding: 30 }}>
       <Button onClick={() => inputFileRef.current.click()} variant="outlined" size="large">
-        Завантажити прев'ю
+        Додати зображення
       </Button>
       <input
         ref={inputFileRef}
@@ -109,7 +109,7 @@ export const AddPost = () => {
       />
       {imageUrl && (
         <>
-        <Button variant="contained" color="error" onClick={onClickRemoveImage}>
+        <Button classes={{root: styles.remove_img}} variant="contained" color="error" onClick={onClickRemoveImage}>
           Видалити
         </Button>
         <img
